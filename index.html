@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TO DO</title>
+    <link href="./style.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+
+    </head>
+        <body>
+            <main>
+                <nav>
+                    <div div class="left">To DO List</div>
+                    <div class="right">
+                    <button id="toggle-modal">Add New Task</button>
+                    </div>
+                </nav>
+                <section class="board">
+                    <div id="todo" class="task-column">
+                        <div class="heading">
+                            <div class="left">To do</div>
+                            <div class="right count">0</div>
+                        </div>
+                    </div>
+                    <div id="progress" class="task-column">
+                        <div class="heading">
+                            <div class="left">In Progress</div>
+                            <div class="right count">0</div>
+                        </div>    
+                    </div>
+                    <div id="done" class="task-column">
+                        <div class="heading">
+                            <div class="left">Done</div>
+                            <div class="right count">0</div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+            <div class="modal add-new-task">
+                <div class="bg"></div>
+                <div class="center">
+                    <input id="task-title" type="text" placeholder="Task Title" spellcheck="true" autocomplete="off">
+                    <textarea id="taskdescprition" placeholder="Task Description" spellcheck="true" autocomplete="off"></textarea>
+                    <button id="add-new-task" class="add-task-btn">Add Task</button>
+                </div>
+            </div>
+            <script src="script.js"></script>
+        </body>
+</html>
