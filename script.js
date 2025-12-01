@@ -13,7 +13,6 @@ let dragElement = null;
 let taskTitleInputValue = "";
 let taskDescrpInputValue = "";
 
-
 const d = new Date();
 const day = String(d.getDate()).padStart(2, "0");
 const month = d.toLocaleString("en-US", { month: "long" });
@@ -31,21 +30,24 @@ function saveTasks() {
   document.querySelectorAll("#todo .task").forEach(task => {
     todoTasks.push({
       title: task.querySelector("h2").textContent,
-      desc: task.querySelector("p").textContent
+      desc: task.querySelector("p").textContent,
+      createdAt: task.dataset.createdAt
     });
   });
 
   document.querySelectorAll("#progress .task").forEach(task => {
     progressTasks.push({
       title: task.querySelector("h2").textContent,
-      desc: task.querySelector("p").textContent
+      desc: task.querySelector("p").textContent,
+      createdAt: task.dataset.createdAt
     });
   });
 
   document.querySelectorAll("#done .task").forEach(task => {
     doneTasks.push({
       title: task.querySelector("h2").textContent,
-      desc: task.querySelector("p").textContent
+      desc: task.querySelector("p").textContent,
+      createdAt: task.dataset.createdAt
     });
   });
 
@@ -106,22 +108,39 @@ function addDragEvents(column) {
 }
 
 // ====================================
-// Create Task Element
+// Create Task Element with Timestamp
 // ====================================
 function createTaskElement(taskData) {
   const task = document.createElement("div");
   task.className = "task";
   task.draggable = true;
 
+  // Use existing createdAt or set to now
+  const createdAtDate = taskData.createdAt
+    ? new Date(taskData.createdAt)
+    : new Date();
+
+  // Save timestamp in data attribute for persistence
+  task.dataset.createdAt = createdAtDate.toISOString();
+
+  const day = String(createdAtDate.getDate()).padStart(2, "0");
+  const month = createdAtDate.toLocaleString("en-US", { month: "short" });
+  const year = createdAtDate.getFullYear();
+  const hours = String(createdAtDate.getHours()).padStart(2, "0");
+  const minutes = String(createdAtDate.getMinutes()).padStart(2, "0");
+
+  const timestamp = `${day}-${month}-${year} ${hours}:${minutes}`;
+
   task.innerHTML = `
     <h2>${taskData.title}</h2>
     <p>${taskData.desc}</p>
+    <span class="timestamp">${timestamp}</span>
     <button class="deleteBtn">Delete</button>
   `;
 
   task.addEventListener("dragstart", () => {
     dragElement = task;
-    task.classList.add("dragging"); // animation class
+    task.classList.add("dragging");
   });
 
   task.addEventListener("dragend", () => {
@@ -181,7 +200,8 @@ addNewTaskBtn.addEventListener("click", () => {
 
   const task = createTaskElement({
     title: taskTitleInputValue,
-    desc: taskDescrpInputValue
+    desc: taskDescrpInputValue,
+    createdAt: new Date() // timestamp for new task
   });
 
   todo.appendChild(task);
@@ -195,8 +215,6 @@ addNewTaskBtn.addEventListener("click", () => {
 addDragEvents(todo);
 addDragEvents(progress);
 addDragEvents(done);
-
-
 
 // Load Tasks + counts
 loadTasks();
