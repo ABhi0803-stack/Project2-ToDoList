@@ -196,17 +196,6 @@ addDragEvents(todo);
 addDragEvents(progress);
 addDragEvents(done);
 
-// ====================================
-// DARK / LIGHT THEME SWITCHER
-// ====================================
-const themeBtn = document.querySelector("#themeBtn");
-
-function loadTheme() {
-  const theme = localStorage.getItem("theme");
-  if (theme === "light") {
-    document.body.classList.add("light");
-  }
-}
 
 
 // Load Tasks + counts
